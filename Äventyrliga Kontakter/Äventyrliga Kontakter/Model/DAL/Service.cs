@@ -15,11 +15,9 @@ namespace Äventyrliga_Kontakter.Model.DAL
         }
 
 
-        public IEnumerable<Contact> GetContacts() {
+        public IEnumerable<Contact> GetContacts() {            
 
-            //TODO: Implementera GetContacts
-
-            throw new NotImplementedException();
+            return ContactDAL.GetContacts();
         
         }
     }
