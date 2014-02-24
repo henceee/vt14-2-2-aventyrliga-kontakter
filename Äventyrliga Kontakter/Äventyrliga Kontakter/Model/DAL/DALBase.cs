@@ -13,7 +13,7 @@ namespace Äventyrliga_Kontakter.Model.DAL
 
         private static string _connectionstring;
 
-        protected static DALBase() {
+        static DALBase() {
 
             _connectionstring = WebConfigurationManager.ConnectionStrings["1dv406_AdventureWorksAssignmentConnectionString"].ConnectionString;
           
@@ -21,7 +21,7 @@ namespace Äventyrliga_Kontakter.Model.DAL
 
         #region CreateConnection
 
-        protected SqlConnection CreateConnection() {
+       protected SqlConnection CreateConnection() {
 
             return new SqlConnection(_connectionstring);
 

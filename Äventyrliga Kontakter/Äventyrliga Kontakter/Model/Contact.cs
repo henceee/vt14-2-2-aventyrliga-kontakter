@@ -11,7 +11,7 @@ namespace Äventyrliga_Kontakter.Model
         public int ContactID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string EmailAdress { get; set; }
+        public string EmailAddress { get; set; }
 
     }
 }

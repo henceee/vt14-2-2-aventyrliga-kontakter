@@ -23,10 +23,72 @@ namespace Äventyrliga_Kontakter
 
         }
 
-       
+        #region GetData
         public IEnumerable<Contact> ListView1_GetData()
         {
             return Service.GetContacts();
         }
+        #endregion
+
+        #region InsertItem
+        public void ListView1_InsertItem(Contact contact)
+        {
+            try
+            {
+                Service.SaveContact(contact);
+            }
+            catch(Exception)
+            {
+                ModelState.AddModelError(String.Empty, "Ett oväntat fel inträffade då kunduppgiften skulle läggas till.");
+            }
+        }
+
+        #endregion
+
+        #region UpdateItem
+        // The id parameter name should match the DataKeyNames value set on the control
+        public void ListView1_UpdateItem(int contactID)
+        {
+            try {
+
+                var contact = Service.GetContact(contactID);
+                if (contact == null) {
+
+                    ModelState.AddModelError(String.Empty,
+                        String.Format("Kontakten med kontaktnummer {0} hittades inte.", contactID));
+
+                    return;
+                }
+
+                if (TryUpdateModel(contact)) {
+
+                    Service.SaveContact(contact);
+
+                }
+            
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(String.Empty, "Ett oväntat fel inträffade då kunduppgiften skulle uppdateras.");
+            }
+        }
+
+         #endregion
+
+        #region DeleteItem
+        // The id parameter name should match the DataKeyNames value set on the control
+        public void ListView1_DeleteItem(int contactID)
+        {
+            try {
+
+                Service.DeleteContact(contactID);
+
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(String.Empty, "Ett oväntat fel inträffade då kunduppgiften skulle tas bort.");
+            }
+        }
+         #endregion
     }
 }
