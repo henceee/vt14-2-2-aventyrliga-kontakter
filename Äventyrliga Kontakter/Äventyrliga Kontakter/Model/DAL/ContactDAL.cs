@@ -161,12 +161,12 @@ namespace Äventyrliga_Kontakter.Model.DAL
                     //Returns Integer
 
 
-                    cmd.Parameters.Add("@FirstName", SqlDbType.NVarChar, 50).Value = contact.FirstName;
-                    cmd.Parameters.Add("@LastName", SqlDbType.NVarChar, 50).Value = contact.LastName;
-                    cmd.Parameters.Add("@EmailAdress", SqlDbType.NVarChar, 50).Value = contact.EmailAddress;
+                    cmd.Parameters.Add("@FirstName", SqlDbType.VarChar, 50).Value = contact.FirstName;
+                    cmd.Parameters.Add("@LastName", SqlDbType.VarChar, 50).Value = contact.LastName;
+                    cmd.Parameters.Add("@EmailAddress", SqlDbType.VarChar, 50).Value = contact.EmailAddress;
 
                     //TODO: Fråga om ParameterDirection ska va Output eller InputOutput
-                    cmd.Parameters.Add("@ContactID", SqlDbType.Int).Direction = ParameterDirection.InputOutput;
+                    cmd.Parameters.Add("@ContactID", SqlDbType.Int,4).Direction = ParameterDirection.Output;
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -192,9 +192,31 @@ namespace Äventyrliga_Kontakter.Model.DAL
 
         public void UppdateContact(Contact contact) {
 
-            //TODO: Implementera ContactDAL - UppdateContact
+            using (var conn = CreateConnection())
+            {
 
-            throw new NotImplementedException();
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("Person.uspUpdateContact", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;                 
+
+
+                    cmd.Parameters.Add("@FirstName", SqlDbType.VarChar, 50).Value = contact.FirstName;
+                    cmd.Parameters.Add("@LastName", SqlDbType.VarChar, 50).Value = contact.LastName;
+                    cmd.Parameters.Add("@EmailAddress", SqlDbType.VarChar, 50).Value = contact.EmailAddress;
+                    cmd.Parameters.Add("@ContactID", SqlDbType.Int, 4).Value = contact.ContactID;
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+
+                }
+                catch
+                {
+
+                    throw new ApplicationException("An error occured while getting customers from the database.");
+                }
+            }
+                        
 
         }
 
