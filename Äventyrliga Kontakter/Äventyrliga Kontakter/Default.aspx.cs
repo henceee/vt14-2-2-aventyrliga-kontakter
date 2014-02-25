@@ -20,7 +20,12 @@ namespace Äventyrliga_Kontakter
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["success"] as bool? == true)
+            {
 
+                Sucess.Visible = true;
+                Session.Remove("success");
+            }
         }
 
         #region GetData
@@ -36,6 +41,10 @@ namespace Äventyrliga_Kontakter
             try
             {
                 Service.SaveContact(contact);
+                Session["success"] = true;
+                Response.Redirect("~/");
+
+
             }
             catch(Exception)
             {

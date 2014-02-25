@@ -11,12 +11,30 @@ namespace Äventyrliga_Kontakter.Model.DAL
     {
         #region DeleteContacts
 
-        public void DeleteContacts(int contactID) {
+        public void DeleteContacts(int contactID)
+        {
 
-            //TODO: IMPLEMENTERA ContactDAL - DeleteContacts()
 
-            throw new NotImplementedException();
+            using (var conn = CreateConnection())
+            {
 
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("Person.uspRemoveContact", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@ContactID", SqlDbType.Int, 4).Value = contactID;
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+
+                }
+                catch
+                {
+
+                    throw new ApplicationException("An error occured while getting customers from the database.");
+                }
+                
+            }
         }
 
         #endregion

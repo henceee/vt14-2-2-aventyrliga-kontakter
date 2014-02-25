@@ -9,6 +9,9 @@
 <body>
     <form id="form1" runat="server">
     <div>
+        <asp:Panel ID="Sucess" runat="server" Visible="false">
+            <p>Uppladdningen Lyckades!</p>
+        </asp:Panel>
     <h1> Äventyrliga Kontakter</h1>
         <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
         <asp:ListView ID="ListView1" runat="server"
@@ -55,7 +58,7 @@
                     </td>
 
                     <td>
-                        <asp:LinkButton runat="server" CommandName="Delete" Text="Ta Bort" CausesValidation="false"/>
+                        <asp:LinkButton runat="server" CommandName="Delete" Text="Ta Bort" CausesValidation="false" OnClientClick="return if(!confirm('Vill du ta bort kontakten')) return false"/>
                         <asp:LinkButton runat="server" CommandName="Edit" Text="Redigera" CausesValidation="false"/>
                     </td>
                 </tr>
