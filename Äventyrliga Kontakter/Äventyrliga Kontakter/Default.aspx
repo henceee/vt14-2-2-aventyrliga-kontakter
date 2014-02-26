@@ -9,8 +9,10 @@
 <body>
     <form id="form1" runat="server">
     <div>
+
+
         <asp:Panel ID="Sucess" runat="server" Visible="false">
-            <p>Uppladdningen Lyckades!</p>
+            <p>Kontakten lades till</p>
         </asp:Panel>
     <h1> Äventyrliga Kontakter</h1>
         <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
@@ -41,6 +43,16 @@
 
                     <asp:PlaceHolder ID="ItemPlaceHolder" runat="server"></asp:PlaceHolder>
 
+                   <%-- <asp:DataPager ID="DataPager" runat="server">
+                    <Fields>
+                        <asp:NextPreviousPagerField ShowFirstPageButton="True" FirstPageText=" << "
+                            ShowNextPageButton="False" ShowPreviousPageButton="False"  />
+                        <asp:NumericPagerField />
+                        <asp:NextPreviousPagerField ShowLastPageButton="True" LastPageText=" >> "
+                            ShowNextPageButton="False" ShowPreviousPageButton="False"  />
+                    </Fields>
+                </asp:DataPager>--%>
+
                 </table>
             </LayoutTemplate>
 
@@ -57,8 +69,8 @@
                         <asp:Label ID="EmailLabel" runat="server" Text="<%#: Item.EmailAddress %>"></asp:Label>
                     </td>
 
-                    <td>
-                        <asp:LinkButton runat="server" CommandName="Delete" Text="Ta Bort" CausesValidation="false" OnClientClick="return if(!confirm('Vill du ta bort kontakten')) return false"/>
+                    <td>                                                                                                                                         
+                        <asp:LinkButton runat="server" CommandName="Delete" Text="Ta Bort" CausesValidation="false" OnClientClick='<%# String.Format("return confirm(\"Ta bort {0} {1}?\")", Item.FirstName, Item.LastName)%>'/>
                         <asp:LinkButton runat="server" CommandName="Edit" Text="Redigera" CausesValidation="false"/>
                     </td>
                 </tr>

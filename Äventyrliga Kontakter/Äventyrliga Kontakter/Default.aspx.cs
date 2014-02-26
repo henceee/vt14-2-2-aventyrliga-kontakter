@@ -32,6 +32,7 @@ namespace Äventyrliga_Kontakter
         public IEnumerable<Contact> ListView1_GetData()
         {
             return Service.GetContacts();
+                        
         }
         #endregion
 

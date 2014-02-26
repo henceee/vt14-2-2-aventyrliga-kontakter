@@ -149,6 +149,62 @@ namespace Äventyrliga_Kontakter.Model.DAL
         #region GetContactsPageWise
 
         public IEnumerable<Contact> GetContactsPageWise(int maxiumRows, int startRowIndex, out int totalRowCount) {
+            
+            var contacts = new List<Contact>(100);
+
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    
+                    var cmd = new SqlCommand("Person.uspGetContacts", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+
+                        var ContactIDIndex = reader.GetOrdinal("ContactID");
+                        var FirstNameIndex = reader.GetOrdinal("FirstName");
+                        var LastNameIndex = reader.GetOrdinal("LastName");
+                        var EmailIndex = reader.GetOrdinal("EmailAddress");
+
+                        while (reader.Read())
+                        {
+
+                            contacts.Add(new Contact
+                            {
+
+                                ContactID = reader.GetInt32(ContactIDIndex),
+                                FirstName = reader.GetString(FirstNameIndex),
+                                LastName = reader.GetString(LastNameIndex),
+                                EmailAddress = reader.GetString(EmailIndex)
+
+                            });
+                        }
+
+                    }
+
+
+                    contacts.TrimExcess();
+
+                    totalRowCount = contacts.Count;
+
+                    return contacts.Skip(startRowIndex).Take(maxiumRows);
+
+
+
+                }
+                catch
+                {
+
+                    throw new ApplicationException("An error occured while getting customers from the database.");
+                }
+
+            }
+
+
 
             //TODO: Implementera ContactDAL - GetContactsPageWise
 
@@ -161,7 +217,7 @@ namespace Äventyrliga_Kontakter.Model.DAL
 
         public void InsertContact(Contact contact) {
 
-            //TODO UNDERSÖK VARFÖR DET INTE FUNKAR ATT LÄGGA IN EN NY KONTAKT?!
+            
 
             using (var conn = CreateConnection()) {
 
@@ -170,20 +226,11 @@ namespace Äventyrliga_Kontakter.Model.DAL
                     SqlCommand cmd = new SqlCommand("Person.uspAddContact", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    //Person.uspAddContact - Parameters
-
-                    //@FirstName(nvarchar(50), Input, No default)
-                    //@LastName(nvarchar(50), Input, No default)
-                    //@EmailAdress((nvarchar(50), Input, No default)
-                    //@ContactID(int, Input/Output, No default)
-                    //Returns Integer
-
-
                     cmd.Parameters.Add("@FirstName", SqlDbType.VarChar, 50).Value = contact.FirstName;
                     cmd.Parameters.Add("@LastName", SqlDbType.VarChar, 50).Value = contact.LastName;
                     cmd.Parameters.Add("@EmailAddress", SqlDbType.VarChar, 50).Value = contact.EmailAddress;
 
-                    //TODO: Fråga om ParameterDirection ska va Output eller InputOutput
+                   
                     cmd.Parameters.Add("@ContactID", SqlDbType.Int,4).Direction = ParameterDirection.Output;
 
                     conn.Open();
