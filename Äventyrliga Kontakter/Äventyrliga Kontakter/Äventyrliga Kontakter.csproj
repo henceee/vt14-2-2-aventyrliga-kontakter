@@ -65,6 +65,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Infrastructure\ValidationExtension.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -44,6 +45,16 @@ namespace Äventyrliga_Kontakter.Model.DAL
 
         public void SaveContact(Contact contact) {
 
+             ICollection<ValidationResult> ValidationResults;
+
+             if (!contact.Validate(out ValidationResults)) {
+
+                 var ex = new ValidationException("Objektet klarade inte valideringen");
+                 ex.Data.Add("ValidationResults", ValidationResults);
+                 throw ex;
+             }
+            
+
             if (contact.ContactID == 0)
             {
 
@@ -58,6 +69,8 @@ namespace Äventyrliga_Kontakter.Model.DAL
 
         #endregion
 
+
+       
 
     }
 }

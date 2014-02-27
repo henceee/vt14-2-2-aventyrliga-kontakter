@@ -26,6 +26,9 @@ namespace Äventyrliga_Kontakter
                 Sucess.Visible = true;
                 Session.Remove("success");
             }
+           
+
+            
         }
 
         #region GetData
@@ -39,18 +42,20 @@ namespace Äventyrliga_Kontakter
         #region InsertItem
         public void ListView1_InsertItem(Contact contact)
         {
-            try
-            {
-                Service.SaveContact(contact);
-                Session["success"] = true;
-                Response.Redirect("~/");
+           
+                if (ModelState.IsValid) {
 
-
-            }
-            catch(Exception)
-            {
-                ModelState.AddModelError(String.Empty, "Ett oväntat fel inträffade då kunduppgiften skulle läggas till.");
-            }
+                    try
+                    {
+                        Service.SaveContact(contact);
+                        Session["success"] = true;
+                        Response.Redirect("~/");
+                    }
+                    catch (Exception)
+                    {
+                        ModelState.AddModelError(String.Empty, "Ett oväntat fel inträffade då kunduppgiften skulle läggas till.");
+                    }
+                }
         }
 
         #endregion
@@ -59,6 +64,10 @@ namespace Äventyrliga_Kontakter
         // The id parameter name should match the DataKeyNames value set on the control
         public void ListView1_UpdateItem(int contactID)
         {
+            //Stänger av valideringen på raden
+
+            
+
             try {
 
                 var contact = Service.GetContact(contactID);
@@ -81,6 +90,11 @@ namespace Äventyrliga_Kontakter
             {
                 ModelState.AddModelError(String.Empty, "Ett oväntat fel inträffade då kunduppgiften skulle uppdateras.");
             }
+
+
+            //Slår igång valideringen på insert raden
+
+           
         }
 
          #endregion
@@ -100,5 +114,15 @@ namespace Äventyrliga_Kontakter
             }
         }
          #endregion
+
+
+ 
+
+
+
+       
+      
+
+       
     }
 }

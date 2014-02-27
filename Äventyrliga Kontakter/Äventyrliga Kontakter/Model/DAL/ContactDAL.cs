@@ -216,7 +216,6 @@ namespace Äventyrliga_Kontakter.Model.DAL
         #region InsertContact
 
         public void InsertContact(Contact contact) {
-
             
 
             using (var conn = CreateConnection()) {
@@ -229,7 +228,6 @@ namespace Äventyrliga_Kontakter.Model.DAL
                     cmd.Parameters.Add("@FirstName", SqlDbType.VarChar, 50).Value = contact.FirstName;
                     cmd.Parameters.Add("@LastName", SqlDbType.VarChar, 50).Value = contact.LastName;
                     cmd.Parameters.Add("@EmailAddress", SqlDbType.VarChar, 50).Value = contact.EmailAddress;
-
                    
                     cmd.Parameters.Add("@ContactID", SqlDbType.Int,4).Direction = ParameterDirection.Output;
 
