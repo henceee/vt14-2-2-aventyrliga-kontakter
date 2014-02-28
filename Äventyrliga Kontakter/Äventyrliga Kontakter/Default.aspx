@@ -30,6 +30,8 @@
           
 
             <LayoutTemplate>
+                
+                
                 <table>
 
                     <tr>
@@ -46,7 +48,7 @@
 
                     <asp:PlaceHolder ID="ItemPlaceHolder" runat="server"></asp:PlaceHolder>
 
-                   <%-- <asp:DataPager ID="DataPager" runat="server">
+                     <asp:DataPager ID="DataPager" runat="server" PageSize="20">
                     <Fields>
                         <asp:NextPreviousPagerField ShowFirstPageButton="True" FirstPageText=" << "
                             ShowNextPageButton="False" ShowPreviousPageButton="False"  />
@@ -54,7 +56,7 @@
                         <asp:NextPreviousPagerField ShowLastPageButton="True" LastPageText=" >> "
                             ShowNextPageButton="False" ShowPreviousPageButton="False"  />
                     </Fields>
-                </asp:DataPager>--%>
+                </asp:DataPager>
 
                 </table>
             </LayoutTemplate>

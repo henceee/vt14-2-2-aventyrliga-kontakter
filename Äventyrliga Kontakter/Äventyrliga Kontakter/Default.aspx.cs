@@ -32,9 +32,11 @@ namespace Äventyrliga_Kontakter
         }
 
         #region GetData
-        public IEnumerable<Contact> ListView1_GetData()
+                                                       //
+        public IEnumerable<Contact> ListView1_GetData(int maximumRows, int startRowIndex, out int totalRowCount)
         {
-            return Service.GetContacts();
+                                        //
+            return Service.GetContacts(maximumRows, startRowIndex, out totalRowCount);
                         
         }
         #endregion
@@ -64,9 +66,6 @@ namespace Äventyrliga_Kontakter
         // The id parameter name should match the DataKeyNames value set on the control
         public void ListView1_UpdateItem(int contactID)
         {
-            //Stänger av valideringen på raden
-
-            
 
             try {
 
@@ -91,9 +90,6 @@ namespace Äventyrliga_Kontakter
                 ModelState.AddModelError(String.Empty, "Ett oväntat fel inträffade då kunduppgiften skulle uppdateras.");
             }
 
-
-            //Slår igång valideringen på insert raden
-
            
         }
 
@@ -114,6 +110,7 @@ namespace Äventyrliga_Kontakter
             }
         }
          #endregion
+
 
 
  

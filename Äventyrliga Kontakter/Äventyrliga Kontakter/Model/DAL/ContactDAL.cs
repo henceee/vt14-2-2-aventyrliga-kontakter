@@ -148,17 +148,24 @@ namespace Äventyrliga_Kontakter.Model.DAL
 
         #region GetContactsPageWise
 
-        public IEnumerable<Contact> GetContactsPageWise(int maxiumRows, int startRowIndex, out int totalRowCount) {
+        public IEnumerable<Contact> GetContactsPageWise(int maximumRows, int startRowIndex, out int totalRowCount) {
             
             var contacts = new List<Contact>(100);
+          
 
             using (var conn = CreateConnection())
             {
                 try
                 {
-                    
-                    var cmd = new SqlCommand("Person.uspGetContacts", conn);
+
+                    var cmd = new SqlCommand("Person.uspGetContactsPageWise", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@PageIndex", SqlDbType.Int, 4).Value = 100;
+                    cmd.Parameters.Add("@PageSize", SqlDbType.Int, 4).Value = maximumRows;
+                    cmd.Parameters.Add("@RecordCount", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
+
+                  
 
                     conn.Open();
 
@@ -168,7 +175,7 @@ namespace Äventyrliga_Kontakter.Model.DAL
                         var ContactIDIndex = reader.GetOrdinal("ContactID");
                         var FirstNameIndex = reader.GetOrdinal("FirstName");
                         var LastNameIndex = reader.GetOrdinal("LastName");
-                        var EmailIndex = reader.GetOrdinal("EmailAddress");
+                        var EmailIndex = reader.GetOrdinal("EmailAddress");                        
 
                         while (reader.Read())
                         {
@@ -182,6 +189,8 @@ namespace Äventyrliga_Kontakter.Model.DAL
                                 EmailAddress = reader.GetString(EmailIndex)
 
                             });
+
+                            
                         }
 
                     }
@@ -189,9 +198,11 @@ namespace Äventyrliga_Kontakter.Model.DAL
 
                     contacts.TrimExcess();
 
-                    totalRowCount = contacts.Count;
+                    totalRowCount = (int)cmd.Parameters["@RecordCount"].Value;
 
-                    return contacts.Skip(startRowIndex).Take(maxiumRows);
+                    //totalRowCount = contacts.Count;
+
+                    return contacts.Skip(startRowIndex).Take(maximumRows);
 
 
 
@@ -206,9 +217,9 @@ namespace Äventyrliga_Kontakter.Model.DAL
 
 
 
-            //TODO: Implementera ContactDAL - GetContactsPageWise
+            ////TODO: Implementera ContactDAL - GetContactsPageWise
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         #endregion

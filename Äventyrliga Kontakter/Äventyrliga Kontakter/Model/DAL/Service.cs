@@ -33,10 +33,14 @@ namespace Äventyrliga_Kontakter.Model.DAL
 
         #endregion
 
-        #region GetContacts
-        public IEnumerable<Contact> GetContacts() {            
+        #region GetContacts                    
+                                                //
+        public IEnumerable<Contact> GetContacts(int maximumRows, int startRowIndex, out int totalRowCount)
+        {
 
-            return ContactDAL.GetContacts();
+            return ContactDAL.GetContactsPageWise(maximumRows, startRowIndex, out totalRowCount);
+                //ContactDAL.GetContacts();
+                
 
         }
         #endregion
