@@ -12,12 +12,13 @@
         
     <h1> Äventyrliga Kontakter</h1>
 
-        <asp:Panel ID="Sucess" runat="server" Visible="false">
-            <p>Kontakten lades till</p>
+        <asp:Panel ID="UppdateMessagePanel" runat="server" Visible="false">
+            <asp:Literal ID="UppdateMessage" runat="server">Kontakten {0}</asp:Literal>
         </asp:Panel>
 
-        <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="Insert" />
-        <asp:ValidationSummary ID="ValidationSummary2" runat="server" ValidationGroup="Edit" />
+
+      <%--  <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="Insert" />--%>
+        <asp:ValidationSummary ID="ValidationSummary2" runat="server"  /> <%--ValidationGroup="Edit" --%>
 
         <asp:ListView ID="ListView1" runat="server"
             ItemType="Äventyrliga_Kontakter.Model.Contact"

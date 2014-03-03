@@ -161,11 +161,10 @@ namespace Äventyrliga_Kontakter.Model.DAL
                     var cmd = new SqlCommand("Person.uspGetContactsPageWise", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add("@PageIndex", SqlDbType.Int, 4).Value = 100;
+                    cmd.Parameters.Add("@PageIndex", SqlDbType.Int, 4).Value = startRowIndex/ maximumRows +1;
                     cmd.Parameters.Add("@PageSize", SqlDbType.Int, 4).Value = maximumRows;
                     cmd.Parameters.Add("@RecordCount", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
-
-                  
+                                      
 
                     conn.Open();
 
@@ -195,17 +194,12 @@ namespace Äventyrliga_Kontakter.Model.DAL
 
                     }
 
-
                     contacts.TrimExcess();
 
                     totalRowCount = (int)cmd.Parameters["@RecordCount"].Value;
 
-                    //totalRowCount = contacts.Count;
-
-                    return contacts.Skip(startRowIndex).Take(maximumRows);
-
-
-
+                    return contacts;
+                    
                 }
                 catch
                 {

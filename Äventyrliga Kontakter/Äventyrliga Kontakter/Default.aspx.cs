@@ -18,25 +18,37 @@ namespace Äventyrliga_Kontakter
             get { return _Service ?? (_Service = new Service()); }
         }
 
+        
+        private string Message
+        {
+            get { return Session["UppdateMessage"] as String; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["success"] as bool? == true)
             {
 
-                Sucess.Visible = true;
+
+                if (Session["UppdateMessage"] != null){
+
+                    UppdateMessage.Text = string.Format(UppdateMessage.Text, Message);
+                }
+
+                UppdateMessagePanel.Visible = true;
                 Session.Remove("success");
+                Session.Remove("UppdateMessage");
             }
            
-
             
         }
 
         #region GetData
-                                                       //
+
         public IEnumerable<Contact> ListView1_GetData(int maximumRows, int startRowIndex, out int totalRowCount)
         {
-                                        //
-            return Service.GetContacts(maximumRows, startRowIndex, out totalRowCount);
+
+            return Service.GetContactsPagewise(maximumRows, startRowIndex, out totalRowCount);
                         
         }
         #endregion
@@ -51,6 +63,7 @@ namespace Äventyrliga_Kontakter
                     {
                         Service.SaveContact(contact);
                         Session["success"] = true;
+                        Session["UppdateMessage"] = "lades till!";
                         Response.Redirect("~/");
                     }
                     catch (Exception)
@@ -81,6 +94,9 @@ namespace Äventyrliga_Kontakter
                 if (TryUpdateModel(contact)) {
 
                     Service.SaveContact(contact);
+                    Session["success"] = true;
+                    Session["UppdateMessage"] = "uppdaterades!";
+                    Response.Redirect("~/");
 
                 }
             
@@ -102,6 +118,9 @@ namespace Äventyrliga_Kontakter
             try {
 
                 Service.DeleteContact(contactID);
+                Session["success"] = true;
+                Session["UppdateMessage"] = "togs bort!";
+                Response.Redirect("~/");
 
             }
             catch (Exception)
@@ -113,11 +132,11 @@ namespace Äventyrliga_Kontakter
 
 
 
- 
+
+        //)
 
 
-
-       
+        //
       
 
        
