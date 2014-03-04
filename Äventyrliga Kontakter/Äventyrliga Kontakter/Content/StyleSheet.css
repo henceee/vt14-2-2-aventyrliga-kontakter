@@ -1,0 +1,44 @@
+﻿
+#form1 {
+
+    margin-left: 20%;
+    
+
+}
+
+#UppdateMessagePanel {
+
+height: 10%;
+width: 50%;
+background-color: #BEF781;
+color: #0B6121;
+font-weight: bold;
+margin-bottom: 1%;
+border: 1px solid #0B6121;
+
+}
+
+#UppdateMessagePanel p{
+
+    margin-left: 10%;
+    
+
+}
+
+.redbg {
+
+height: 10%;
+width: 50%;
+background-color: #F78181;
+color:#610B21;
+font-weight: bold;
+margin-bottom: 1%;
+border: 1px solid #610B21;
+
+}
+
+table {
+
+    margin-top: 1%;
+    margin-bottom: 1%;
+}

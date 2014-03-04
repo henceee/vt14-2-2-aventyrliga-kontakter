@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link href="~/Content/StyleSheet.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -13,12 +14,12 @@
     <h1> Äventyrliga Kontakter</h1>
 
         <asp:Panel ID="UppdateMessagePanel" runat="server" Visible="false">
-            <asp:Literal ID="UppdateMessage" runat="server">Kontakten {0}</asp:Literal>
+            <p><asp:Literal ID="UppdateMessage" runat="server">Kontakten {0}</asp:Literal></p>
         </asp:Panel>
 
 
-      <%--  <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="Insert" />--%>
-        <asp:ValidationSummary ID="ValidationSummary2" runat="server"  /> <%--ValidationGroup="Edit" --%>
+      <%--  <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="redbg" ValidationGroup="Insert" />--%>
+        <asp:ValidationSummary ID="ValidationSummary2" CssClass="redbg" runat="server"/> <%--ValidationGroup="Edit" --%>
 
         <asp:ListView ID="ListView1" runat="server"
             ItemType="Äventyrliga_Kontakter.Model.Contact"
@@ -27,7 +28,8 @@
             UpdateMethod="ListView1_UpdateItem"
             DeleteMethod="ListView1_DeleteItem"
             DataKeyNames="ContactID"
-            InsertItemPosition="FirstItem">
+            InsertItemPosition="FirstItem"
+            >
           
 
             <LayoutTemplate>
@@ -46,10 +48,10 @@
                              Epost
                          </th>
                     </tr>
-
+                    
                     <asp:PlaceHolder ID="ItemPlaceHolder" runat="server"></asp:PlaceHolder>
-
-                     <asp:DataPager ID="DataPager" runat="server" PageSize="20">
+                   
+                      <asp:DataPager ID="DataPager" runat="server" PageSize="20">
                     <Fields>
                         <asp:NextPreviousPagerField ShowFirstPageButton="True" FirstPageText=" << "
                             ShowNextPageButton="False" ShowPreviousPageButton="False"  />
@@ -58,7 +60,7 @@
                             ShowNextPageButton="False" ShowPreviousPageButton="False"  />
                     </Fields>
                 </asp:DataPager>
-
+                    
                 </table>
             </LayoutTemplate>
 
@@ -157,6 +159,8 @@
                 <p> Kontakter Saknas</p>
 
             </EmptyDataTemplate>
+
+            
 
         </asp:ListView>
 
